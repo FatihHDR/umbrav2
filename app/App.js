@@ -1,10 +1,9 @@
-"use client"
-
 import * as THREE from 'three'
-import { useRef, useCallback, useState, Suspense } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { useRef, useCallback, useState } from 'react'
+import { Canvas, useLoader, useFrame } from '@react-three/fiber'
 import { Center, Text3D } from '@react-three/drei'
-import dynamic from 'next/dynamic'
+import { Bloom, EffectComposer, LUT } from '@react-three/postprocessing'
+import { LUTCubeLoader } from 'postprocessing'
 import { Beam } from './components/Beam'
 import { Rainbow } from './components/Rainbow'
 import { Prism } from './components/Prism'
@@ -21,24 +20,22 @@ export function lerpV3(value, goal, speed = 0.1) {
 }
 
 export function calculateRefractionAngle(incidentAngle, glassIor = 2.5, airIor = 1.000293) {
-    const theta = Math.asin((airIor * Math.sin(incidentAngle)) / glassIor) || 0
-
-    return theta
+  const theta = Math.asin((airIor * Math.sin(incidentAngle)) / glassIor) || 0
+  return theta
 }
 
-const Effects = dynamic(() => import('./components/Effects'), { ssr: false })
-
 export default function App() {
+  const texture = useLoader(LUTCubeLoader, 'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/DwlG-F-6800-STD.cube')
+
   return (
-    <div className="scene-root">
-      <Canvas style={{ position: 'fixed', inset: 0, width: '100%', height: '100%' }} orthographic gl={{ antialias: false }} camera={{ position: [0, 0, 100], zoom: 60 }}>
-        <color attach="background" args={['black']} />
-        <Scene />
-        <Suspense fallback={null}>
-          <Effects lutUrl={'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/DwlG-F-6800-STD.cube'} />
-        </Suspense>
-      </Canvas>
-    </div>
+    <Canvas orthographic gl={{ antialias: false }} camera={{ position: [0, 0, 100], zoom: 70 }}>
+      <color attach="background" args={['black']} />
+      <Scene />
+      <EffectComposer disableNormalPass>
+        <Bloom mipmapBlur levels={9} intensity={1.5} luminanceThreshold={1} luminanceSmoothing={1} />
+        <LUT lut={texture} />
+      </EffectComposer>
+    </Canvas>
   )
 }
 
