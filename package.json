@@ -2,6 +2,7 @@
   "name": "umbrav2",
   "version": "0.1.0",
   "private": true,
+  "main": "./index.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,20 +10,22 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.4.0",
-    "@react-three/postprocessing": "^3.0.4",
     "next": "16.0.3",
     "postprocessing": "^6.38.0",
-    "react": "19.2.0",
-    "react-dom": "19.2.0",
-    "three": "^0.181.2"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-scripts": "5.0.1",
+    "three": "0.145.0",
+    "@react-three/drei": "9.32.4",
+    "@react-three/fiber": "8.8.7",
+    "@react-three/postprocessing": "2.6.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "0.144.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "tailwindcss": "^4",

@@ -1,4 +1,3 @@
-"use client"
 import { forwardRef, useRef } from 'react'
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import { shaderMaterial } from '@react-three/drei'
@@ -98,6 +97,7 @@ const RainbowMaterial = shaderMaterial(
       vec3 co = c / iridescence(uv.x * 0.5 * 3.14159, 1.0 - uv.y + time / 10.0) / 20.0;      
       gl_FragColor = vec4(area * co * l * brightness * emissiveIntensity, 1.0);
       if (gl_FragColor.r + gl_FragColor.g + gl_FragColor.b < 0.01) discard;
+      #include <encodings_fragment>
     }`
 )
 

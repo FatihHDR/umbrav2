@@ -1,4 +1,3 @@
-"use client"
 import * as THREE from 'three'
 import { forwardRef, useRef, useMemo, useLayoutEffect, useImperativeHandle } from 'react'
 import { invalidate } from '@react-three/fiber'

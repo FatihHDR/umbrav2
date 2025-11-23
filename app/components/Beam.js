@@ -1,5 +1,3 @@
-'use client'
-
 import * as THREE from 'three'
 import { forwardRef, useImperativeHandle, useRef } from 'react'
 import { useFrame } from '@react-three/fiber'

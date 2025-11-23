@@ -1,8 +1,7 @@
-"use client"
 import * as THREE from 'three'
 import { forwardRef, useRef } from 'react'
 import { useTexture, Instances, Instance } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 
 export const Flare = forwardRef(({ streak = [8, 20, 1], visible, ...props }, fRef) => {
   const ref = useRef(null)
@@ -11,17 +10,6 @@ export const Flare = forwardRef(({ streak = [8, 20, 1], visible, ...props }, fRe
     'https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/3LuHxfpwb7US0F8ztqsUu3/7d72f24995cc5193fc20f6c14cad7d36/download.png',
     'https://assets.vercel.com/image/upload/contentful/image/e5382hct74si/2NKOrPD3iq75po1v0AA6h2/fc0d49ba0917bcbfd3d8a63688045a0c/download.jpeg'
   ])
-  // Improve texture sampling to reduce blocky/pixelated look when stretched
-  const { gl } = useThree()
-  const maxAnisotropy = (gl && gl.capabilities && gl.capabilities.getMaxAnisotropy) ? gl.capabilities.getMaxAnisotropy() : 1
-  ;[streakTexture, dotTexture, glowTexture].forEach((t) => {
-    if (!t) return
-    t.generateMipmaps = true
-    t.minFilter = THREE.LinearMipMapLinearFilter
-    t.magFilter = THREE.LinearFilter
-    t.anisotropy = Math.max(1, Math.min(16, maxAnisotropy || 1))
-    t.needsUpdate = true
-  })
   const config = {
     transparent: true,
     opacity: 1,
