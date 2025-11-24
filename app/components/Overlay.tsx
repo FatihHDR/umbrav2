@@ -2,6 +2,8 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from 'react'
+import { loadingManager, onSceneReady, isSceneReady } from '@/lib/loaderManager'
+import { GooeyLoader } from '@/components/ui/loader-10'
 
 export default function Overlay() {
   const containerRef = useRef<HTMLDivElement | null>(null)
@@ -10,6 +12,10 @@ export default function Overlay() {
   const scrollProgressRef = useRef(0)
   const [scrollProgress, setScrollProgress] = useState(0)
   const rafRef = useRef<number | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [progress, setProgress] = useState(0)
+  const [managerLoaded, setManagerLoaded] = useState(false)
+  const [sceneReady, setSceneReady] = useState(false)
 
   // Update scrollProgressRef on scroll
   useEffect(() => {
@@ -76,8 +82,79 @@ export default function Overlay() {
     }
   }, [])
 
+  // Subscribe to shared loading manager to show GooeyLoader while assets load
+  useEffect(() => {
+    const lm: any = loadingManager
+    const onStart = (_url: string, itemsLoaded: number, itemsTotal: number) => {
+      setIsLoading(true)
+      setProgress(itemsLoaded / Math.max(1, itemsTotal))
+    }
+    const onProgress = (_url: string, itemsLoaded: number, itemsTotal: number) => {
+      setProgress(itemsLoaded / Math.max(1, itemsTotal))
+    }
+    const onLoad = () => {
+      setProgress(1)
+      setManagerLoaded(true)
+    }
+    const onError = (url: string) => {
+      console.warn('Loading error:', url)
+      setIsLoading(false)
+    }
+
+    lm.onStart = onStart
+    lm.onProgress = onProgress
+    lm.onLoad = onLoad
+    lm.onError = onError
+
+    // If nothing was loading by the time we mounted, mark manager loaded after a tiny delay
+    const t = setTimeout(() => {
+      if (lm.itemsLoaded === lm.itemsTotal) setManagerLoaded(true)
+    }, 200)
+
+    return () => {
+      clearTimeout(t)
+      lm.onStart = null
+      lm.onProgress = null
+      lm.onLoad = null
+      lm.onError = null
+    }
+  }, [])
+
+  // listen for scene-ready
+  useEffect(() => {
+    const off = onSceneReady(() => setSceneReady(true))
+    // if already ready, set immediately
+    if (isSceneReady()) setSceneReady(true)
+    return off
+  }, [])
+
+  // hide loader only when both the manager reported loaded and the scene signalled ready
+  useEffect(() => {
+    if (managerLoaded && sceneReady) {
+      // small delay for smooth fade
+      setTimeout(() => setIsLoading(false), 220)
+    }
+  }, [managerLoaded, sceneReady])
+
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%', background: 'transparent', position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 20 }}>
+      {/* Global loader (centered) */}
+      <div style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 200,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        pointerEvents: isLoading ? 'auto' : 'none',
+        transition: 'opacity 320ms ease, background 320ms ease',
+        opacity: isLoading ? 1 : 0,
+        background: isLoading ? '#000' : 'transparent'
+      }}>
+        <div style={{ transition: 'opacity 320ms ease', opacity: isLoading ? 1 : 0 }}>
+          <GooeyLoader primaryColor="#8b5cf6" secondaryColor="#60a5fa" borderColor="#0f172a" />
+        </div>
+      </div>
       {/* Navigation*/}
       <nav style={{
         position: 'fixed',

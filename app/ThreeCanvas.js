@@ -1,6 +1,8 @@
 "use client"
 import * as THREE from 'three'
+import { loadingManager } from '@/lib/loaderManager'
 import { useRef, useCallback, useState } from 'react'
+import { markSceneReady } from '@/lib/loaderManager'
 import { Canvas, useLoader, useFrame } from '@react-three/fiber'
 import { Center, Text3D } from '@react-three/drei'
 import { Bloom, EffectComposer, LUT } from '@react-three/postprocessing'
@@ -26,7 +28,16 @@ export function calculateRefractionAngle(incidentAngle, glassIor = 2.5, airIor =
 }
 
 export default function ThreeCanvas() {
-  const texture = useLoader(LUTCubeLoader, 'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/DwlG-F-6800-STD.cube')
+  const texture = useLoader(
+    LUTCubeLoader,
+    'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/DwlG-F-6800-STD.cube',
+    (loader) => {
+      try {
+        // some loaders expose a manager property
+        loader.manager = loadingManager
+      } catch (e) {}
+    }
+  )
 
   return (
     <Canvas orthographic gl={{ antialias: false }} camera={{ position: [0, 0, 100], zoom: 70 }}>
@@ -78,6 +89,16 @@ function Scene() {
 
   useFrame((state) => {
     boxreflect.current.setRay([(state.pointer.x * state.viewport.width) / 2, (state.pointer.y * state.viewport.height) / 2, 0], [0, 0, 0])
+
+    // Mark the scene ready after the first frame renders so the UI knows WebGL is
+    // actually visible. This ensures the loader waits for both assets and the
+    // first render.
+    if (!Scene._firstFrame) {
+      Scene._firstFrame = true
+      try {
+        markSceneReady()
+      } catch (e) {}
+    }
 
     lerp(rainbow.current.material, 'emissiveIntensity', isPrismHit ? 2.5 : 0, 0.1)
     spot.current.intensity = rainbow.current.material.emissiveIntensity
