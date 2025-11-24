@@ -4,12 +4,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 export default function Overlay() {
-  const containerRef = useRef(null)
-  const canvasRef = useRef(null)
-  const grainCanvasRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const grainCanvasRef = useRef<HTMLCanvasElement | null>(null)
   const scrollProgressRef = useRef(0)
   const [scrollProgress, setScrollProgress] = useState(0)
-  const rafRef = useRef(null)
+  const rafRef = useRef<number | null>(null)
 
   // Update scrollProgressRef on scroll
   useEffect(() => {
@@ -28,24 +28,28 @@ export default function Overlay() {
       rafRef.current = requestAnimationFrame(tick)
     }
     rafRef.current = requestAnimationFrame(tick)
-    return () => cancelAnimationFrame(rafRef.current)
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current)
+    }
   }, [])
 
   // Film-grain canvas drawing (animated)
   useEffect(() => {
     const canvas = grainCanvasRef.current
-    if (!canvas) return
+    if (!(canvas instanceof HTMLCanvasElement)) return
     const ctx = canvas.getContext('2d')
+    if (!ctx) return
     let w = 0
     let h = 0
-    let raf
+    let raf: number | null = null
+    const canvasEl = canvas as HTMLCanvasElement
 
     function resize() {
       const ratio = window.devicePixelRatio || 1
-      w = canvas.clientWidth * ratio
-      h = canvas.clientHeight * ratio
-      canvas.width = w
-      canvas.height = h
+      w = canvasEl.clientWidth * ratio
+      h = canvasEl.clientHeight * ratio
+      canvasEl.width = w
+      canvasEl.height = h
     }
 
     function draw() {
@@ -68,7 +72,7 @@ export default function Overlay() {
     window.addEventListener('resize', resize)
     return () => {
       window.removeEventListener('resize', resize)
-      cancelAnimationFrame(raf)
+      if (raf !== null) cancelAnimationFrame(raf)
     }
   }, [])
 
