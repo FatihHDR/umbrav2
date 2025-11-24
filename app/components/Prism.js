@@ -16,13 +16,13 @@ export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
       <mesh position={[0, 0, 0.6]} renderOrder={10} scale={2} dispose={null} geometry={nodes.Cone.geometry}>
         <MeshTransmissionMaterial
           transmission={1}
-          roughness={0}
-          thickness={3.5}
-          ior={1.5}
-          chromaticAberration={0.06}
-          distortion={0.1}
-          anisotropy={0.1}
-          temporalDistortion={0.2}
+          roughness={0.1}
+          thickness={1.5}
+          ior={1.7}
+          chromaticAberration={0.75}
+          distortion={0.2}
+          anisotropy={0.3}
+          temporalDistortion={0.1}
         />
       </mesh>
     </group>
