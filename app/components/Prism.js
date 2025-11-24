@@ -1,6 +1,7 @@
 "use client"
+
 import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader } from 'three-stdlib'
 
 export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
   const { nodes } = useLoader(GLTFLoader, 'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/xxpI-prism.glb')
@@ -12,7 +13,7 @@ export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
       </mesh>
       {/* The visible hi-res prism */}
       <mesh position={[0, 0, 0.6]} renderOrder={10} scale={2} dispose={null} geometry={nodes.Cone.geometry}>
-        <meshPhysicalMaterial clearcoat={1} clearcoatRoughness={0} transmission={1} thickness={0.9} roughness={0} toneMapped={false} />
+        <meshPhysicalMaterial transparent clearcoat={1} clearcoatRoughness={0} transmission={1} thickness={0.9} roughness={0} toneMapped={false} />
       </mesh>
     </group>
   )

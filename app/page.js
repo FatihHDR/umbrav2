@@ -1,5 +1,8 @@
-import App from './App'
+"use client"
+import dynamic from 'next/dynamic'
+
+const ThreeCanvas = dynamic(() => import('./ThreeCanvas'), { ssr: false })
 
 export default function Page() {
-    return <App />
+    return <ThreeCanvas />
 }

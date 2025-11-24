@@ -1,8 +1,14 @@
-import {createRoot} from 'react-dom/client'
-import './styles.css' 
-import App from './App'
+import './globals.css'
 
+export const metadata = {
+	title: 'Umbrav2',
+	description: 'Umbrav2 Next app'
+}
 
-const root = document.getElementById('root')
-if (!root) throw new Error('Root element #root not found')
-createRoot(root).render(<App/>)
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+	return (
+		<html lang="en">
+			<body>{children}</body>
+		</html>
+	)
+}
