@@ -1,3 +1,4 @@
+"use client"
 import { forwardRef, useRef } from 'react'
 import { extend, useFrame, useThree } from '@react-three/fiber'
 import { shaderMaterial } from '@react-three/drei'

@@ -1,3 +1,4 @@
+"use client"
 import * as THREE from 'three'
 import { forwardRef, useRef } from 'react'
 import { useTexture, Instances, Instance } from '@react-three/drei'

@@ -1,5 +1,6 @@
+"use client"
 import { useLoader } from '@react-three/fiber'
-import { GLTFLoader } from 'three-stdlib'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
   const { nodes } = useLoader(GLTFLoader, 'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/xxpI-prism.glb')
