@@ -2,6 +2,7 @@
 
 import { useLoader } from '@react-three/fiber'
 import { GLTFLoader } from 'three-stdlib'
+import { MeshTransmissionMaterial } from '@react-three/drei'
 
 export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
   const { nodes } = useLoader(GLTFLoader, 'https://uploads.codesandbox.io/uploads/user/b3e56831-8b98-4fee-b941-0e27f39883ab/xxpI-prism.glb')
@@ -11,13 +12,19 @@ export function Prism({ onRayOver, onRayOut, onRayMove, ...props }) {
       <mesh visible={false} scale={1.9} rotation={[Math.PI / 2, Math.PI, 0]} onRayOver={onRayOver} onRayOut={onRayOut} onRayMove={onRayMove}>
         <cylinderGeometry args={[1, 1, 1, 3, 1]} />
       </mesh>
-      {/* The visible hi-res prism */}
+      {/* The visible hi-res prism with realistic glass material */}
       <mesh position={[0, 0, 0.6]} renderOrder={10} scale={2} dispose={null} geometry={nodes.Cone.geometry}>
-        <meshPhysicalMaterial transparent clearcoat={1} clearcoatRoughness={0} transmission={1} thickness={0.9} roughness={0} toneMapped={false} />
+        <MeshTransmissionMaterial
+          transmission={1}
+          roughness={0}
+          thickness={3.5}
+          ior={1.5}
+          chromaticAberration={0.06}
+          distortion={0.1}
+          anisotropy={0.1}
+          temporalDistortion={0.2}
+        />
       </mesh>
     </group>
   )
 }
-
-
-
