@@ -1,0 +1,518 @@
+{
+  "meta": {
+    "format": "httpie",
+    "version": "1.0.0",
+    "contentType": "collection",
+    "schema": "https://schema.httpie.io/1.0.0.json",
+    "docs": "https://httpie.io/r/help/export-from-httpie",
+    "source": "HTTPie Desktop 2025.2.0"
+  },
+  "entry": {
+    "name": "umbra",
+    "icon": {
+      "name": "wrench",
+      "color": "red"
+    },
+    "auth": {
+      "type": "bearer",
+      "target": "headers",
+      "credentials": {
+        "username": "",
+        "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAiLCJzdWIiOjEsImlhdCI6MTc2NjY5MTIxMywiZXhwIjoxNzY2Njk0ODEzfQ.hyi6ugUjbvoY9MR_-9jE0EYsPNZpPByDxqMb129K_Oc"
+      }
+    },
+    "requests": [
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/gemini/chat",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"prompt\": \"Test message\",\n  \"new_session\": true\n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models?limit=5&page=1",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "none"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models/019aebe1-1e0f-72b8-97fb-f77f45f2aa96",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \"gpt-umbra-test\",\n  \"version\": \"v1.2.0\",\n  \"type\": \"chat\",\n  \"description\": \"Fine-tuned chat model for Umbra platform\",\n  \"endpoint_url\": \"https://api.umbra.ai/v1/chat\",\n  \"owner\": \"team-ml\",\n  \"config\": {\n    \"temperature\": 0.7,\n    \"max_tokens\": 2048\n  },\n  \"metrics\": {\n    \"accuracy\": 0.92,\n    \"latency_ms\": 120\n  },\n  \"tags\": [\"production\", \"chat\", \"fine-tuned\"],\n  \"status\": \"active\"\n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \"gpt-umbra-test\",\n  \"version\": \"v1.2.0\",\n  \"type\": \"chat\",\n  \"description\": \"Fine-tuned chat model for Umbra platform\",\n  \"endpoint_url\": \"https://api.umbra.ai/v1/chat\",\n  \"owner\": \"team-ml\",\n  \"config\": {\n    \"temperature\": 0.7,\n    \"max_tokens\": 2048\n  },\n  \"metrics\": {\n    \"accuracy\": 0.92,\n    \"latency_ms\": 120\n  },\n  \"tags\": [\"production\", \"chat\", \"fine-tuned\"],\n  \"status\": \"active\"\n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": true,
+            "fields": [
+              {
+                "name": "name",
+                "value": "GPT X UMBRA",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "version",
+                "value": "1.0",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "type",
+                "value": "chat",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "file",
+                "value": "",
+                "enabled": true,
+                "type": "file"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models/019b5016-0503-7353-8f74-f222dba0886d",
+        "method": "PATCH",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \"gpt-umbra-test\",\n  \"version\": \"v1.2.0\",\n  \"type\": \"chat\",\n  \"description\": \"Fine-tuned chat model for Umbra platform\",\n  \"endpoint_url\": \"https://api.umbra.ai/v1/chat\",\n  \"owner\": \"team-ml\",\n  \"config\": {\n    \"temperature\": 0.7,\n    \"max_tokens\": 2048\n  },\n  \"metrics\": {\n    \"accuracy\": 0.92,\n    \"latency_ms\": 120\n  },\n  \"tags\": [\"production\", \"chat\", \"fine-tuned\"],\n  \"status\": \"active\"\n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": true,
+            "fields": [
+              {
+                "name": "name",
+                "value": "GPT X UMBRA",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "version",
+                "value": "1.0",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "type",
+                "value": "chat",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "file",
+                "value": "",
+                "enabled": true,
+                "type": "file"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models/019b5016-0503-7353-8f74-f222dba0886d",
+        "method": "PATCH",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"status\": \"deprecated\",\n  \"description\": \"This model has been replaced by v2.0\"\n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "http://127.0.0.1:8000/api/v1/models/019aebe1-1e0f-72b8-97fb-f77f45f2aa96",
+        "method": "DELETE",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "text",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "{{umbra_url}}/api/v1/auth/register",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "bearer",
+          "target": "headers",
+          "credentials": {
+            "username": "",
+            "password": ""
+          }
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "Fatih",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "email",
+                "value": "fatahillah.alt2@gmail.com",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "password",
+                "value": "12345678",
+                "enabled": true,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "{{umbra_url}}/api/v1/auth/login",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "none"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "Fatih",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "email",
+                "value": "fatahillah.alt2@gmail.com",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "password",
+                "value": "12345678",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "",
+                "value": "",
+                "enabled": true,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "{{umbra_url}}/api/v1/auth/refresh",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "Fatih",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "email",
+                "value": "fatahillah.alt2@gmail.com",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "password",
+                "value": "12345678",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "",
+                "value": "",
+                "enabled": true,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "",
+        "url": "{{umbra_url}}/api/v1/auth/me",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "{\n  \"name\": \n}",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "Fatih",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "email",
+                "value": "fatahillah.alt@gmail.com",
+                "enabled": false,
+                "type": "text"
+              },
+              {
+                "name": "password",
+                "value": "12345678",
+                "enabled": false,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      }
+    ]
+  }
+}

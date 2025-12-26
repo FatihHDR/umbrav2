@@ -4,8 +4,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { loadingManager, onSceneReady, isSceneReady } from '@/lib/loaderManager'
 import { GooeyLoader } from '@/components/ui/loader-10'
+import { fetchUserProfile } from '@/lib/services/user'
+import { getAuthToken, logout } from '@/lib/services/auth'
 
-export default function Overlay() {
+export default function Overlay({
+  isChatOpen,
+  setIsChatOpen,
+  isModelsOpen,
+  setIsModelsOpen
+}: {
+  isChatOpen: boolean;
+  setIsChatOpen: (open: boolean) => void;
+  isModelsOpen: boolean;
+  setIsModelsOpen: (open: boolean) => void;
+}) {
   const containerRef = useRef<HTMLDivElement | null>(null)
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const grainCanvasRef = useRef<HTMLCanvasElement | null>(null)
@@ -16,6 +28,26 @@ export default function Overlay() {
   const [progress, setProgress] = useState(0)
   const [managerLoaded, setManagerLoaded] = useState(false)
   const [sceneReady, setSceneReady] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [loadingUser, setLoadingUser] = useState(true)
+
+  // Fetch user profile on mount
+  useEffect(() => {
+    async function loadUser() {
+      const token = getAuthToken();
+      if (token) {
+        try {
+          const userProfile = await fetchUserProfile(token);
+          setUser(userProfile);
+        } catch (error) {
+          console.error('Failed to fetch user profile:', error);
+          setUser(null);
+        }
+      }
+      setLoadingUser(false);
+    }
+    loadUser();
+  }, []);
 
   // Update scrollProgressRef on scroll
   useEffect(() => {
@@ -204,19 +236,131 @@ export default function Overlay() {
           <a href="#" style={{ color: 'white', textDecoration: 'none', opacity: 0.9 }}>
             Sound
           </a>
+          <button
+            onClick={() => setIsModelsOpen(true)}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              opacity: 0.9,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              fontSize: 'inherit',
+              fontWeight: 'inherit',
+              letterSpacing: 'inherit',
+              textTransform: 'inherit',
+              padding: 0
+            }}
+          >
+            AI Models
+          </button>
+          <button
+            onClick={() => setIsChatOpen(true)}
+            style={{
+              color: 'white',
+              textDecoration: 'none',
+              opacity: 0.9,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              fontSize: 'inherit',
+              fontWeight: 'inherit',
+              letterSpacing: 'inherit',
+              textTransform: 'inherit',
+              padding: 0
+            }}
+          >
+            Chat
+          </button>
         </div>
 
-        <div style={{
-          fontFamily: 'Arial, sans-serif',
-          fontSize: '11px',
-          fontWeight: '500',
-          color: 'white',
-          opacity: 0.9,
-          letterSpacing: '1px',
-          textTransform: 'uppercase'
-        }}>
-          + Connect
-        </div>
+        {!loadingUser && (
+          user ? (
+            // Authenticated user menu
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem'
+            }}>
+              <span style={{
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '11px',
+                fontWeight: '500',
+                color: 'white',
+                letterSpacing: '1px',
+                textTransform: 'uppercase'
+              }}>
+                {user.name}
+              </span>
+              <button
+                onClick={() => {
+                  logout();
+                  setUser(null);
+                  window.location.reload();
+                }}
+                style={{
+                  fontFamily: 'Arial, sans-serif',
+                  fontSize: '11px',
+                  fontWeight: '500',
+                  color: 'white',
+                  letterSpacing: '1px',
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  padding: '0.5rem 1rem',
+                  background: 'rgba(239, 68, 68, 0.15)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '0.375rem',
+                  transition: 'all 0.3s ease',
+                  backdropFilter: 'blur(8px)',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.25)'
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.5)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(239, 68, 68, 0.15)'
+                  e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.3)'
+                }}
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            // Not authenticated - show Sign In link
+            <a
+              href="/signin"
+              style={{
+                fontFamily: 'Arial, sans-serif',
+                fontSize: '11px',
+                fontWeight: '500',
+                color: 'white',
+                letterSpacing: '1px',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                padding: '0.5rem 1rem',
+                background: 'rgba(139, 92, 246, 0.15)',
+                border: '1px solid rgba(139, 92, 246, 0.3)',
+                borderRadius: '0.375rem',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(8px)',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'rgba(139, 92, 246, 0.25)'
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.5)'
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(139, 92, 246, 0.15)'
+                e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)'
+              }}
+            >
+              Sign In
+            </a>
+          )
+        )}
       </nav>
 
       {/* Large text*/}
@@ -296,8 +440,8 @@ export default function Overlay() {
           maxWidth: '150px',
           textAlign: 'right'
         }}>
-          In emptiness<br/>
-          we find<br/>
+          In emptiness<br />
+          we find<br />
           true happiness
 
         </div>
